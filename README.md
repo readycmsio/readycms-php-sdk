@@ -1,4 +1,3 @@
-
 # ReadyCMS PHP SDK
 
 The ReadyCMS PHP SDK allows developers to easily integrate with the ReadyCMS API v3. This SDK simplifies the process of interacting with the ReadyCMS API by providing a set of intuitive methods to manage users, products, orders, and more.
@@ -11,6 +10,8 @@ The ReadyCMS PHP SDK allows developers to easily integrate with the ReadyCMS API
   - [Authentication](#authentication)
   - [User Management](#user-management)
   - [Product Management](#product-management)
+  - [Orders Management](#orders-management)
+  - [Categories and Tags Management](#categories-and-tags-management)
   - [Error Handling](#error-handling)
 - [Advanced Features](#advanced-features)
 - [Testing](#testing)
@@ -100,6 +101,54 @@ $newProduct = [
 
 $response = $productEndpoint->createProduct($newProduct);
 print_r($response);
+```
+
+### Orders Management
+
+The SDK provides comprehensive methods to manage orders:
+
+#### List Orders
+
+```php
+$ordersEndpoint = new OrdersEndpoint($client);
+$orders = $ordersEndpoint->getOrders(['status' => 'completed']);
+print_r($orders);
+```
+
+#### Create a New Order
+
+```php
+$newOrder = [
+    'user_id' => 123,
+    'products' => [
+        ['id' => 456, 'quantity' => 2],
+        ['id' => 789, 'quantity' => 1],
+    ],
+    'total_price' => 99.99,
+];
+
+$response = $ordersEndpoint->createOrder($newOrder);
+print_r($response);
+```
+
+### Categories and Tags Management
+
+The SDK supports both product and custom categories and tags:
+
+#### List Categories
+
+```php
+$categoriesEndpoint = new CategoriesEndpoint($client);
+$categories = $categoriesEndpoint->getCategories(['content_slug' => 'products', 'content_type' => 'ecommerce']);
+print_r($categories);
+```
+
+#### List Tags
+
+```php
+$tagsEndpoint = new TagsEndpoint($client);
+$tags = $tagsEndpoint->getTags(['content_slug' => 'products', 'content_type' => 'ecommerce']);
+print_r($tags);
 ```
 
 ## Error Handling
