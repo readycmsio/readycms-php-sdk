@@ -51,7 +51,7 @@ print_r($users);
 All requests to the ReadyCMS API require an API key. You can obtain your API key from the ReadyCMS dashboard. When creating the `Client` instance, pass your API key to the constructor:
 
 ```php
-$client = new Client('https://api.readycms.com', 'your-api-key');
+$client = new Client('https://api-v3.readycms.io', 'your-api-key');
 ```
 
 ### User Management
