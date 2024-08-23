@@ -31,8 +31,8 @@ You can install the SDK via Composer. Run the following command in your project 
 
 ```bash
 composer require readycms/readycms-php-sdk
- 
- 
+ ```
+
 ```markdown
 ## Getting Started
 
@@ -40,7 +40,7 @@ To get started, you need to instantiate the `Client` class with your ReadyCMS AP
 
 ```php
 require 'vendor/autoload.php';
-
+```
 use ReadyCMS\Client\Client;
 use ReadyCMS\Endpoints\UsersEndpoint;
 
@@ -64,7 +64,7 @@ All requests to the ReadyCMS API require an API key. You can obtain your API key
 
 ```php
 $client = new Client('your-api-key-here', 'v3');
-
+```
 
 
 ### Usage - User Management
@@ -79,7 +79,7 @@ The SDK provides methods to manage users in your ReadyCMS platform.
 ```php
 $users = $userEndpoint->getUsers();
 print_r($users);
-
+```
 
 ### Usage - Product Management
 
@@ -94,7 +94,7 @@ The SDK also supports product management:
 $productEndpoint = new ProductsEndpoint($client);
 $products = $productEndpoint->listProducts();
 printr($products);
-
+```
 
 ### Usage - Error Handling
 
@@ -113,7 +113,7 @@ try {
 } catch (Exception $e) {
     echo "General Error: " . $e->getMessage();
 }
-
+```
 
 
 ### Usage - Caching
@@ -125,7 +125,7 @@ The SDK includes a built-in caching mechanism using the Symfony Cache component.
 
 ```php
 $client = new Client('your-api-key-here', 'v3', 3600, '/path/to/custom/cache');
-
+```
 
 
 ### Usage - Middleware
@@ -146,7 +146,7 @@ $loggingMiddleware = Middleware::tap(
 );
 
 $client = new Client('your-api-key-here', 'v3', 3600, null, [$loggingMiddleware]);
-
+```
 
 
 ### Code Samples
