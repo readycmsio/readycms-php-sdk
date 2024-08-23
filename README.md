@@ -39,7 +39,6 @@ To get started, you need to instantiate the `Client` class with your ReadyCMS AP
 
 ```php
 require 'vendor/autoload.php';
-```
 use ReadyCMS\Client\Client;
 use ReadyCMS\Endpoints\UsersEndpoint;
 
@@ -49,6 +48,7 @@ $userEndpoint = new UsersEndpoint($client);
 // Example: Fetch all users
 $users = $userEndpoint->getUsers();
 print_r($users);
+```
 
 
 
@@ -104,7 +104,7 @@ try {
 ```
 
 
-### Usage - Caching
+## Usage
 
 ### Caching
 
@@ -132,9 +132,7 @@ $loggingMiddleware = Middleware::tap(
 $client = new Client('your-api-key-here', 'v3', 3600, null, [$loggingMiddleware]);
 ```
 
-
-### Code Samples
-
+ 
 ## Code Samples
 
 To help you get started with the ReadyCMS PHP SDK, we’ve provided several code samples:
@@ -182,9 +180,7 @@ Cached responses are stored in the specified directory and are automatically inv
 ### 5. How can I handle rate limiting?
 
 If your requests hit the API rate limit, the SDK will automatically handle the retries based on the `Retry-After` header returned by the server.
-
-
-### Contributing
+ 
 
 ## Contributing
 
