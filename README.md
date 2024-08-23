@@ -32,8 +32,7 @@ You can install the SDK via Composer. Run the following command in your project 
 ```bash
 composer require readycms/readycms-php-sdk
  ```
-
-```markdown
+ 
 ## Getting Started
 
 To get started, you need to instantiate the `Client` class with your ReadyCMS API key and version. You can then use the provided methods to interact with the API.
@@ -54,11 +53,7 @@ print_r($users);
 
 
 ### Usage - Authentication
-
-```markdown
-## Usage
-
-### Authentication
+   
 
 All requests to the ReadyCMS API require an API key. You can obtain your API key from the ReadyCMS dashboard. When creating the `Client` instance, pass your API key to the constructor:
 
@@ -68,8 +63,7 @@ $client = new Client('your-api-key-here', 'v3');
 
 
 ### Usage - User Management
-
-```markdown
+ 
 ### User Management
 
 The SDK provides methods to manage users in your ReadyCMS platform.
