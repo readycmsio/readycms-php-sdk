@@ -31,10 +31,8 @@ You can install the SDK via Composer. Run the following command in your project 
 
 ```bash
 composer require readycms/readycms-php-sdk
-
-
-### Getting Started
-
+ 
+ 
 ```markdown
 ## Getting Started
 
