@@ -1,6 +1,10 @@
+![ReadyCMS Logo](https://cdn.readycms.io/web/img/readycms-logo.png)
+
 # ReadyCMS PHP SDK
 
-The ReadyCMS PHP SDK allows developers to easily integrate with the ReadyCMS API v3. This SDK simplifies the process of interacting with the ReadyCMS API by providing a set of intuitive methods to manage users, products, orders, and more.
+The ReadyCMS PHP SDK allows developers to easily integrate with the ReadyCMS API. This SDK simplifies the process of interacting with the ReadyCMS API by providing a set of intuitive methods to manage users, products, orders, and more.
+
+[![GitHub](https://img.shields.io/github/stars/readycmsio/readycms-php-sdk?style=social)](https://github.com/readycmsio/readycms-php-sdk)
 
 ## Table of Contents
 
@@ -10,13 +14,16 @@ The ReadyCMS PHP SDK allows developers to easily integrate with the ReadyCMS API
   - [Authentication](#authentication)
   - [User Management](#user-management)
   - [Product Management](#product-management)
-  - [Orders Management](#orders-management)
-  - [Categories and Tags Management](#categories-and-tags-management)
   - [Error Handling](#error-handling)
-- [Advanced Features](#advanced-features)
+  - [Caching](#caching)
+  - [Middleware](#middleware)
+- [Code Samples](#code-samples)
+- [FAQ](#faq)
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
+- [Connect with Us](#connect-with-us)
+
 
 ## Installation
 
@@ -24,26 +31,33 @@ You can install the SDK via Composer. Run the following command in your project 
 
 ```bash
 composer require readycms/readycms-php-sdk
-```
 
+
+### Getting Started
+
+```markdown
 ## Getting Started
 
-To get started, you need to instantiate the `Client` class with your ReadyCMS API base URL and API key. You can then use the provided methods to interact with the API.
+To get started, you need to instantiate the `Client` class with your ReadyCMS API key and version. You can then use the provided methods to interact with the API.
 
 ```php
 require 'vendor/autoload.php';
 
 use ReadyCMS\Client\Client;
-use ReadyCMS\Endpoints\UserEndpoint;
+use ReadyCMS\Endpoints\UsersEndpoint;
 
-$client = new Client('https://api.readycms.com', 'your-api-key');
-$userEndpoint = new UserEndpoint($client);
+$client = new Client('your-api-key-here', 'v3');
+$userEndpoint = new UsersEndpoint($client);
 
 // Example: Fetch all users
-$users = $userEndpoint->listUsers();
+$users = $userEndpoint->getUsers();
 print_r($users);
-```
 
+
+
+### Usage - Authentication
+
+```markdown
 ## Usage
 
 ### Authentication
@@ -51,9 +65,13 @@ print_r($users);
 All requests to the ReadyCMS API require an API key. You can obtain your API key from the ReadyCMS dashboard. When creating the `Client` instance, pass your API key to the constructor:
 
 ```php
-$client = new Client('https://api-v3.readycms.io', 'your-api-key');
-```
+$client = new Client('your-api-key-here', 'v3');
 
+
+
+### Usage - User Management
+
+```markdown
 ### User Management
 
 The SDK provides methods to manage users in your ReadyCMS platform.
@@ -61,23 +79,13 @@ The SDK provides methods to manage users in your ReadyCMS platform.
 #### List Users
 
 ```php
-$users = $userEndpoint->listUsers();
+$users = $userEndpoint->getUsers();
 print_r($users);
-```
 
-#### Create a New User
 
-```php
-$newUser = [
-    'email' => 'newuser@example.com',
-    'name' => 'New User',
-    // Additional fields
-];
+### Usage - Product Management
 
-$response = $userEndpoint->createUser($newUser);
-print_r($response);
-```
-
+```markdown
 ### Product Management
 
 The SDK also supports product management:
@@ -85,99 +93,119 @@ The SDK also supports product management:
 #### List Products
 
 ```php
-$productEndpoint = new ProductEndpoint($client);
+$productEndpoint = new ProductsEndpoint($client);
 $products = $productEndpoint->listProducts();
-print_r($products);
-```
+printr($products);
 
-#### Create a New Product
 
-```php
-$newProduct = [
-    'name' => 'New Product',
-    'price' => 29.99,
-    // Additional fields
-];
+### Usage - Error Handling
 
-$response = $productEndpoint->createProduct($newProduct);
-print_r($response);
-```
-
-### Orders Management
-
-The SDK provides comprehensive methods to manage orders:
-
-#### List Orders
-
-```php
-$ordersEndpoint = new OrdersEndpoint($client);
-$orders = $ordersEndpoint->getOrders(['status' => 'completed']);
-print_r($orders);
-```
-
-#### Create a New Order
-
-```php
-$newOrder = [
-    'user_id' => 123,
-    'products' => [
-        ['id' => 456, 'quantity' => 2],
-        ['id' => 789, 'quantity' => 1],
-    ],
-    'total_price' => 99.99,
-];
-
-$response = $ordersEndpoint->createOrder($newOrder);
-print_r($response);
-```
-
-### Categories and Tags Management
-
-The SDK supports both product and custom categories and tags:
-
-#### List Categories
-
-```php
-$categoriesEndpoint = new CategoriesEndpoint($client);
-$categories = $categoriesEndpoint->getCategories(['content_slug' => 'products', 'content_type' => 'ecommerce']);
-print_r($categories);
-```
-
-#### List Tags
-
-```php
-$tagsEndpoint = new TagsEndpoint($client);
-$tags = $tagsEndpoint->getTags(['content_slug' => 'products', 'content_type' => 'ecommerce']);
-print_r($tags);
-```
-
-## Error Handling
+```markdown
+### Error Handling
 
 The SDK includes robust error handling using custom exceptions. Errors encountered during API requests will throw an `HttpException` with relevant details, including the HTTP status code, error message, and additional details.
 
-### Example
+#### Example
 
 ```php
 try {
     $response = $userEndpoint->listUsers();
 } catch (HttpException $e) {
     echo createErrorResponse($e->getMessage(), $e->getStatusCode(), $e->getErrorCode(), $e->getDetails());
+} catch (Exception $e) {
+    echo "General Error: " . $e->getMessage();
 }
-```
 
-## Advanced Features
 
-- **Pagination**: Easily handle paginated results using built-in methods.
-- **Batch Processing**: Support for batch operations with custom endpoint classes.
 
-## Testing
+### Usage - Caching
 
-To run the tests for this SDK, use PHPUnit:
+```markdown
+### Caching
+
+The SDK includes a built-in caching mechanism using the Symfony Cache component. You can control the cache duration (TTL) and specify a custom cache directory:
+
+```php
+$client = new Client('your-api-key-here', 'v3', 3600, '/path/to/custom/cache');
+
+
+
+### Usage - Middleware
+
+```markdown
+### Middleware
+
+You can add custom middleware to the SDK to modify requests or responses, log requests, or implement custom authentication. Middleware is added during the `Client` initialization:
+
+```php
+$loggingMiddleware = Middleware::tap(
+    function (RequestInterface $request) use ($logger) {
+        $logger->info('Sending request: ' . $request->getMethod() . ' ' . $request->getUri());
+    },
+    function (ResponseInterface $response) use ($logger) {
+        $logger->info('Received response: ' . $response->getStatusCode());
+    }
+);
+
+$client = new Client('your-api-key-here', 'v3', 3600, null, [$loggingMiddleware]);
+
+
+
+### Code Samples
+
+```markdown
+## Code Samples
+
+To help you get started with the ReadyCMS PHP SDK, we’ve provided several code samples:
+
+- **[Basic Usage](examples/basic-usage.php)**: Learn how to initialize the client and make a simple API call.
+- **[Error Handling](examples/error-handling.php)**: Understand how to handle exceptions thrown by the SDK.
+- **[Middleware Usage](examples/middleware-usage.php)**: See how to add custom middleware for logging and other purposes.
+- **[Caching Example](examples/caching.php)**: Learn how to use the built-in caching mechanism.
+- **[Rate Limiting Handling](examples/rate-limiting.php)**: Understand how the SDK handles API rate limits.
+
+
+
+## FAQ (Frequently Asked Questions)
+
+### 1. How do I install the ReadyCMS PHP SDK?
+
+You can install the SDK via Composer by running the following command:
 
 ```bash
-./vendor/bin/phpunit
+composer require readycms/readycms-php-sdk
 ```
 
+### 2. What is the minimum PHP version required?
+
+The ReadyCMS PHP SDK requires PHP 7.2 or higher.
+
+### 3. How do I authenticate my requests?
+
+All requests to the ReadyCMS API require an API key. You can pass this key when creating the `Client` instance:
+
+```php
+$client = new Client('your-api-key-here', 'v3');
+```
+
+### 4. How does caching work in the SDK?
+
+The SDK includes a built-in caching mechanism using the Symfony Cache component. You can control the cache duration (TTL) and specify a custom cache directory:
+
+```php
+$client = new Client('your-api-key-here', 'v3', 3600, '/path/to/custom/cache');
+```
+
+Cached responses are stored in the specified directory and are automatically invalidated after the specified TTL.
+
+### 5. How can I handle rate limiting?
+
+If your requests hit the API rate limit, the SDK will automatically handle the retries based on the `Retry-After` header returned by the server.
+
+
+### Contributing
+
+```markdown
 ## Contributing
 
 Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) before submitting a pull request.
@@ -185,3 +213,12 @@ Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTIN
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Connect with Us
+
+Stay connected and keep up-to-date with the latest news, updates, and more:
+
+- **Website**: [ReadyCMS](https://www.readycms.io/en/)
+- **GitHub**: [ReadyCMS GitHub](https://github.com/readycmsio/readycms-php-sdk)
+- **Twitter**: [@ReadyCMS](https://twitter.com/readycms)
+- **LinkedIn**: [ReadyCMS LinkedIn](https://www.linkedin.com/company/readycms)

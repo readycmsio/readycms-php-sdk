@@ -6,18 +6,16 @@ use ReadyCMS\Client\Client;
 use ReadyCMS\Endpoints\UsersEndpoint;
 use ReadyCMS\Exceptions\HttpException;
 
-$apiKey = 'your-api-key';
-$apiVersion = 'v3'; // Specify the version as needed
+$apiKey = 'your-api-key-here';
+$apiVersion = 'v3';
 
-$client = new Client($apiKey, $apiVersion, 3600);
+$client = new Client($apiKey, $apiVersion);
 
 $userEndpoint = new UsersEndpoint($client);
 
 try {
-
-    $response = $userEndpoint->getUsers();
-    print_r($response);
-
+    $users = $userEndpoint->getUsers();
+    print_r($users);
 } catch (HttpException $e) {
     echo createErrorResponse($e->getMessage(), $e->getStatusCode(), $e->getErrorCode(), $e->getDetails());
 } catch (Exception $e) {
