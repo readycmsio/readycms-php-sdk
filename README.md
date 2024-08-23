@@ -63,8 +63,7 @@ $client = new Client('your-api-key-here', 'v3');
 
 
 ### Usage - User Management
- 
-### User Management
+  
 
 The SDK provides methods to manage users in your ReadyCMS platform.
 
@@ -76,10 +75,7 @@ print_r($users);
 ```
 
 ### Usage - Product Management
-
-```markdown
-### Product Management
-
+ 
 The SDK also supports product management:
 
 #### List Products
@@ -91,9 +87,7 @@ printr($products);
 ```
 
 ### Usage - Error Handling
-
-```markdown
-### Error Handling
+ 
 
 The SDK includes robust error handling using custom exceptions. Errors encountered during API requests will throw an `HttpException` with relevant details, including the HTTP status code, error message, and additional details.
 
@@ -112,7 +106,6 @@ try {
 
 ### Usage - Caching
 
-```markdown
 ### Caching
 
 The SDK includes a built-in caching mechanism using the Symfony Cache component. You can control the cache duration (TTL) and specify a custom cache directory:
@@ -123,10 +116,7 @@ $client = new Client('your-api-key-here', 'v3', 3600, '/path/to/custom/cache');
 
 
 ### Usage - Middleware
-
-```markdown
-### Middleware
-
+ 
 You can add custom middleware to the SDK to modify requests or responses, log requests, or implement custom authentication. Middleware is added during the `Client` initialization:
 
 ```php
@@ -145,7 +135,6 @@ $client = new Client('your-api-key-here', 'v3', 3600, null, [$loggingMiddleware]
 
 ### Code Samples
 
-```markdown
 ## Code Samples
 
 To help you get started with the ReadyCMS PHP SDK, we’ve provided several code samples:
@@ -197,7 +186,6 @@ If your requests hit the API rate limit, the SDK will automatically handle the r
 
 ### Contributing
 
-```markdown
 ## Contributing
 
 Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) before submitting a pull request.
