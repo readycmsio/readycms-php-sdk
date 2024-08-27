@@ -30,7 +30,7 @@ The ReadyCMS PHP SDK allows developers to easily integrate with the ReadyCMS API
 You can install the SDK via Composer. Run the following command in your project directory:
 
 ```bash
-composer require readycms/readycms-php-sdk
+composer require readycmsio/readycms-php-sdk
  ```
  
 ## Getting Started
