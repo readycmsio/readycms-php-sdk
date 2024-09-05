@@ -49,6 +49,8 @@ class CommentsEndpoint
         if (empty($contentSlug) || empty($contentType) || empty($commentId)) return false;
         return $this->client->delete($contentType == 'ecommerce' && $contentSlug == 'products' ? '/products/comments' : '/custom/comments', $options);
     }
-
-    // More methods based on the provided functions...
+    public function getCommentsCount(array $options = [])
+    {
+        return $this->client->get('/comments/count', $options);
+    }
 }

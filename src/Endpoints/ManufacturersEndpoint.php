@@ -36,5 +36,13 @@ class ManufacturersEndpoint
         return false;
     }
 
-    // More methods based on the provided functions...
+    public function getManufacturersCount(array $options = [])
+    {
+        return $this->client->get('/manufacturers/count', $options);
+    }
+
+    public function getManufacturersRevisions(array $options = [])
+    {
+        return $this->client->get('/manufacturers/revisions', $options);
+    }
 }

@@ -28,4 +28,6 @@ class CustomersEndpoint
         $options['soft_delete'] = 1;
         return $this->client->delete('/customers', $options);
     }
+
+    
 }
